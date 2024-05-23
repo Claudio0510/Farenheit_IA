@@ -1,0 +1,30 @@
+import numpy as np
+import tensorflow as tf
+
+# All the entries of information
+celsius = np.array([-40, -10, 0, 8, 15, 22, 38], dtype=float)
+fahrenheit = np.array([-40, 14, 32, 46, 59, 72, 100], dtype=float)
+
+# Define your Dense layer
+capa = tf.keras.layers.Dense(units=1, input_shape=[1])
+
+# Create a list containing your layer(s)
+layers = [capa]
+
+# Pass the list of layers to the Sequential model
+modelo = tf.keras.Sequential(layers)
+
+modelo.compile(
+    optimizer=tf.keras.optimizers.Adam(0.1),
+    loss="mean_squared_error"
+)
+
+print("Empezando entrenamiento")
+historial = modelo.fit(celsius, fahrenheit, epochs=330, verbose=False)
+print("Modelo entrenado")
+
+
+
+print("Hagamos una prediccion")
+resultado = modelo.predict(np.array([100]))
+print("El resultado es" + str(resultado) + "Farenheit")
